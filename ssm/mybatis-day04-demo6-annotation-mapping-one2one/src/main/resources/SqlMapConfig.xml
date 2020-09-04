@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <settings>
+        <!--开启延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--当开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载-->
+        <setting name="aggressiveLazyLoading" value="false" />
+    </settings>
+
+    <!--别名配置-->
+    <typeAliases>
+        <package name="com.itheima.domain" />
+    </typeAliases>
+
+    <!--
+        数据源配置
+        environments:环境配置
+                default:表示默认使用哪个环境配置
+    -->
+    <environments default="development">
+        <!--单个环境配置-->
+        <environment id="development">
+            <!--
+                使用的事务管理器:JDBC
+            -->
+            <transactionManager type="JDBC"/>
+
+            <!--
+                dataSource:配置数据源节点
+                type:表示使用什么类型连接池
+                    UNPOOLED:表示不使用连接池
+                    POOLED:表示使用连接池
+            -->
+            <dataSource type="UNPOOLED">
+                <!--数据源链接信息-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://c33215d134.wicp.vip:47380/ssm?characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--加载映射文件-->
+    <mappers>
+        <package name="com.itheima.mapper" />
+    </mappers>
+</configuration>

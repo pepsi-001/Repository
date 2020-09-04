@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace="当前xml文件对应的dao的接口全限定名"
+-->
+<mapper namespace="com.itheima.mapper.UserMapper">
+
+    <!--
+        select：查询
+        insert:增加
+        update:修改
+        delete:删除
+    -->
+
+    <!--
+    修改用户
+-->
+    <update id="updateUserValue" parameterType="com.itheima.domain.User">
+        UPDATE USER
+            SET username = '${username}',
+            sex = '${sex}',
+            address = '${address}',
+            birthday = '${birthday}'
+        WHERE
+            id = '${id}'
+    </update>
+
+    <!--
+        根据用户名模糊查询
+        ${value}:中建的key必须为value,只针对一个简单类型（基本类型和string）
+    -->
+    <select id="getByUserNameValue" parameterType="java.lang.String" resultType="com.itheima.domain.User">
+        SELECT  * FROM  user WHERE  username like '%${value}%'
+    </select>
+
+    <!--
+        根据用户名模糊查询
+        #{}:如果传入的数据属于简单类型(基本数据类型和string),key可以取任何字符
+    -->
+    <!--<select id="getByUserName" parameterType="java.lang.String" resultType="com.itheima.domain.User">-->
+    <select id="getByUserName" parameterType="string" resultType="com.itheima.domain.User">
+        SELECT  * FROM  user WHERE  username like #{username}
+    </select>
+
+    <!--
+        修改用户
+    -->
+    <update id="updateUser" parameterType="com.itheima.domain.User">
+        UPDATE user
+        SET
+          username=#{username},
+          sex=#{sex},
+          birthday=#{birthday},
+          address=#{address}
+        WHERE
+          id=#{id}
+    </update>
+
+    <!--
+        parameterType:接口所对应的方法的入参类型
+        #{}:固定写法，对应SQL语句的列的占位符，大括号中间写入参和列对应的属性名
+    -->
+    <insert id="addUser" parameterType="com.itheima.domain.User">
+        INSERT  INTO  user(username,sex,birthday,address)VALUES(#{username},#{sex},#{birthday},#{address})
+
+        <!--
+            查询主键
+            keyColumn:获取自增主键(id)的自增值
+            keyProperty:将主键自增值查询出来后，给入参的指定属性(id)赋值
+            SELECT LAST_INSERT_ID():查询当前事物中自增值的最后一个值
+            order:AFTER表示先执行selectKey外部的SQL语句，再执行selectKey内部的SQL语句
+        -->
+        <selectKey keyColumn="id" keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+    </insert>
+
+
+
+    <!--
+        查询：用<select>节点
+        id="接口对应的方法名"
+        resultType:返回值需要转换的类型(单个数据要转的类型)
+    -->
+    <select id="findAll" resultType="com.itheima.domain.User">
+        SELECT * FROM  user
+    </select>
+</mapper>

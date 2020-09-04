@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--
+        对象创建方式
+            1)无参构造函数
+
+            2)静态工厂创建对象
+
+            3)普通工厂创建对象
+    -->
+
+    <!--
+        1)无参构造函数
+        <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService" />
+    -->
+
+
+
+
+    <!--
+        2)静态工厂创建对象
+            class:工厂的类的全限定名
+            factory-method:调用哪个方法创建对象
+            <bean id="accountService" class="com.itheima.factory.StaticFactory" factory-method="createAccountService" />
+    -->
+
+
+    <!--
+        3)普通工厂创建对象
+        a.创建工厂对象
+        b.通过工厂的方法创建其他对象
+    -->
+    <bean class="com.itheima.factory.Factory" id="factory" />
+
+    <!--
+        factory-bean:表示使用factory工厂对象创建一个新的对象
+        factory-method:调用哪个方法创建对象
+    -->
+    <bean id="accountService" factory-bean="factory" factory-method="createAccountService" />
+
+</beans>

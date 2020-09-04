@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--
+        Bean >= Java对象 Java对象代理实现
+
+        Map<accountService,value>
+        表明创建了一个AccountServiceImpl对象的实例
+
+        作用范围：
+            scope:singleton 单利模式(之创建一个对象)   默认单利
+                  prototype 多例模式(每次使用创建一个新的对象)
+                  request
+                  session
+                  global session
+
+        生命周期：
+            对象创建监听(对象创建并交给IOC容器管理)
+            对象销毁监听(对象从IOC容器中移除)
+    -->
+    <bean id="accountService" init-method="init" destroy-method="destroy" class="com.itheima.service.impl.AccountServiceImpl" scope="singleton" />
+
+    <!--
+        Map<accountDao,value>
+        创建一个对象(com.itheima.dao.impl.AccountDaoImpl)的实例
+    -->
+    <bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl" />
+
+</beans>

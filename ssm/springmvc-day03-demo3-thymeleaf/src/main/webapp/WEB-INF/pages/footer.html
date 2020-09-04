@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>页脚</title>
+</head>
+<body>
+
+    <!--
+        定义一个模块，id是ft
+    -->
+    <div th:fragment="ft(msg)">
+        我的名字就是这么叼！我是叶良辰！你是不是<span th:text="${msg}"></span>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itheima.mapper.AccountCustomerMapper">
+
+
+
+    <!--
+        查询账号信息(1对1)
+    -->
+    <select id="getAccountCustomer" resultType="AccountCustomer">
+        SELECT u.username,u.address,a.* FROM user u , account a WHERE u.id=a.uid
+    </select>
+
+
+</mapper>

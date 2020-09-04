@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+    <!--
+        创建一个事务管理器
+    -->
+    <bean id="txtManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+
+    <!--
+        传播特性
+        transaction-manager="txtManager":指定当前约束针对的事务管理器
+    -->
+    <tx:advice id="txAdvice" transaction-manager="txtManager">
+        <!--
+            配置约束规则
+        -->
+        <tx:attributes>
+            <!--
+                所有以save开始的方法都参与事务
+            -->
+            <tx:method name="save*"
+                       propagation="REQUIRED"
+                       isolation="DEFAULT"
+                       rollback-for="java.lang.Exception" />
+
+            <!--其他方法全部只读-->
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+
+
+    <!--
+        声明式AOP配置->指定切点
+    -->
+    <aop:config>
+
+        <!--
+            指定切点
+        -->
+        <aop:pointcut id="transactionPointCut" expression="execution(* com.itheima.service.impl.*.*(..))" />
+
+        <!--
+            配置通知
+        -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointCut" />
+
+    </aop:config>
+
+    <!--
+        导入标签，引入另外一个文件的内容
+    -->
+    <import resource="spring-mybatis.xml" />
+
+</beans>

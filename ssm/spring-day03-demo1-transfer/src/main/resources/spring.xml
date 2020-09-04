@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        创建AccountDaoImpl的实例，并给SpringIOC容器管理
+    -->
+    <bean class="com.itheima.dao.impl.AccountDaoImpl" id="accountDao">
+        <property name="runner" ref="runner" />
+    </bean>
+
+    <!--
+        AccountService
+    -->
+    <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService">
+        <property name="accountDao" ref="accountDao" />
+        <!--注入Connection管理工具类-->
+        <property name="connectionUtil" ref="connectionUtil" />
+    </bean>
+
+    <!--
+        QueryRunner对象的实例
+    -->
+    <bean class="org.apache.commons.dbutils.QueryRunner" id="runner">
+        <!--
+            构造函数注入
+        -->
+        <constructor-arg name="ds" ref="dataSource" />
+    </bean>
+
+
+    <!--
+        创建DadaSource
+    -->
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+        <!--
+            4大对象
+            username、password、url、driver
+        -->
+        <property name="user" value="root" />
+        <property name="password" value="root" />
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/spring5" />
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+    </bean>
+
+
+    <!--数据库连接对象管理工具-->
+    <bean class="com.itheima.util.ConnectionUtil" id="connectionUtil">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+</beans>

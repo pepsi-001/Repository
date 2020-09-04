@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        AccountService
+    -->
+    <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService">
+        <!--dao-->
+        <property name="accountDao" ref="accountDao" />
+    </bean>
+
+    <!--
+        给Dao注入JdbcTemplate
+    -->
+    <bean class="com.itheima.dao.impl.AccountDaoImpl" id="accountDao">
+       <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--
+        加载配置文件，并注入到对应Bean中
+    -->
+    <context:property-override location="classpath:jdbc.properties" />
+
+
+
+
+
+
+   <!--===========================基于AOP实现事务管理(声明式事务管理)================================-->
+
+    <!--
+        创建一个DataSource
+    -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" />
+
+    <!--创建事务管理器-->
+    <bean id="txtManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--
+        指定事务的管理方式
+        transaction-manager="txtManager":通知事务管理器遵循如下方式管理事务
+    -->
+    <tx:advice id="txAdvice" transaction-manager="txtManager">
+        <!--
+            配置管理方式
+        -->
+        <tx:attributes>
+            <!--
+                name="trans*":所有以trans开始的方法
+                read-only="true":只能读数据库数据，不能修改(增删改)
+                isolation:事务隔离级别
+                          DEFAULT:采用数据库默认的隔离级别
+
+                propagation:事务的传播特性
+                         REQUIRED:当前方法必须在事务下执行
+
+                timeout:当前事务被执行时间（链接对象被占用时间）
+                rollback-for:发生异常，就回滚事务
+            -->
+            <tx:method name="trans*"
+                       isolation="DEFAULT"
+                       propagation="REQUIRED"
+                       timeout="60"
+                       rollback-for="java.lang.Exception"
+            />
+            <tx:method name="add*"
+                       isolation="DEFAULT"
+                       propagation="REQUIRED"
+                       timeout="60"
+                       rollback-for="java.lang.Exception"
+            />
+
+            <!--
+                read-only="true":表示不能对数据库进行修改
+            -->
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!--
+        指定哪些方法参与事务
+    -->
+    <aop:config>
+        <!--指定切点-->
+        <aop:pointcut id="transPointCut" expression="execution(* com.itheima.service.impl.*.*(..))" />
+        <!--通知配置-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transPointCut" />
+    </aop:config>
+
+</beans>

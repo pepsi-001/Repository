@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    namespace="当前xml文件对应的dao的接口全限定名"
+-->
+<mapper namespace="com.itheima.mapper.UserMapper">
+
+    <!--
+        查询：用<select>节点
+        id="接口对应的方法名"
+        resultType:返回值需要转换的类型(单个数据要转的类型)
+    -->
+    <select id="findAll" resultType="com.itheima.domain.User">
+        SELECT * FROM user
+    </select>
+</mapper>

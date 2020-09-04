@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace="当前xml文件对应的dao的接口全限定名"
+-->
+<mapper namespace="com.itheima.mapper.UserInfoMapper">
+
+
+    <!--
+        结果集映射转换器
+        ResultMap：结果集映射关系转换
+        id="UserInfoResultMap":唯一标示
+        type:映射关系需要转换的JavaBean对象
+        id:主键对应的列和对应的JavaBean的属性
+        result:非主键对应的列和对应的JavaBean的属性
+        column：查询的列的名字
+        property:需要转换的JavaBean的属性名
+    -->
+    <resultMap id="UserInfoResultMap" type="com.itheima.domain.UserInfo">
+        <id column="user_id" property="id" />
+        <result column="user_name" property="username" />
+        <result column="user_sex" property="sex" />
+        <result column="user_address" property="address" />
+        <result column="user_birthday" property="birthday" />
+    </resultMap>
+    <insert id="add" parameterType="com.itheima.domain.UserInfo">
+        INSERT INTO userinfo ( user_id, user_name, user_birthday, user_sex, user_address)
+        VALUES
+            (#{id}, #{username}, #{birthday}, #{sex}, #{address})
+    </insert>
+
+
+    <!--
+        查询列表
+    -->
+    <select id="getListResultMap" resultMap="UserInfoResultMap">
+        SELECT
+            user_id,
+            user_name,
+            user_sex,
+            user_address,
+            user_birthday
+        FROM
+        userinfo
+    </select>
+
+    <!--
+        查询列表
+    -->
+    <select id="getList" resultType="com.itheima.domain.UserInfo">
+        SELECT
+          user_id id,
+          user_name username,
+          user_sex sex,
+          user_address address,
+          user_birthday birthday
+        FROM
+          userinfo
+    </select>
+
+
+</mapper>

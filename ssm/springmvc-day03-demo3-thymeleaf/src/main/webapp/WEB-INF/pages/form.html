@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+</head>
+<body>
+
+
+form表单绑定
+<form th:action="@{/text/save}" th:object="${user}" method="post">
+    用户名字：<input name="name" th:field="*{name}" /><br/>
+    用户住址：<input name="address" th:field="*{address}" /><br/>
+    <button type="submit">保存</button>
+</form>
+
+</body>
+</html>

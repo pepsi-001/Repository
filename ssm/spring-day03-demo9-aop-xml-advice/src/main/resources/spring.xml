@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/aop
+                  http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+    <!--
+        创建AccountServiceImpl的Bean
+    -->
+    <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService" />
+
+    <!--
+        创建Logger的Bean
+        通知类
+    -->
+    <bean class="com.itheima.aop.Logger" id="logger" />
+
+    <!--
+        配置aop
+            aop:config
+        配置切面
+            aop:aspect
+        配置切点
+
+        配置通知
+
+    -->
+    <aop:config>
+        <!--
+            切面
+            ref="logger":当前切面使用的通知类为logger，也就是说增强代码在logger,每次指定的增强方法在logger里面
+        -->
+        <aop:aspect ref="logger">
+            <!--
+                切点配置
+                expression:切入点表达式,指定在哪些或者哪个方法上增强
+                id:配置一个唯一标示
+                * com.itheima.service.impl.*.*(..))
+                任意返回值 com.itheima.service.impl包下的所有类以及所有方法包含所有方法的参数都执行增强
+            -->
+            <aop:pointcut id="savePointCut" expression="execution(* com.itheima.service.impl.*.*(..))" />
+
+            <!--
+                前置通知
+                pointcut-ref:在调用saveAccount()之前进行增强
+                method="printLog":表示调用saveAccount()方法之前，先执行通知类(logger)的printLog方法
+            -->
+            <aop:before method="printLog" pointcut-ref="savePointCut" />
+
+            <!--
+                最终通知
+            -->
+            <aop:after method="after" pointcut-ref="savePointCut" />
+
+            <!--
+                后置通知
+                    目标方法执行完毕之后执行
+            -->
+            <aop:after-returning method="afterLog" pointcut-ref="savePointCut" />
+
+            <!--
+                after-throwing
+                异常通知
+                发生异常后调用
+            -->
+            <aop:after-throwing method="error" pointcut-ref="savePointCut" />
+
+
+
+        </aop:aspect>
+    </aop:config>
+
+
+
+</beans>

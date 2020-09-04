@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文本输出</title>
+</head>
+<body>
+
+<pre>
+
+    <div>
+        引用另外一个模块：th:include
+        <div id="Y" th:include="footer::ft('刘德华')"></div>
+    </div>
+
+    <div>
+        引用另外一个模块：th:replace
+        <div id="A" th:replace="footer::ft('张卫健')"></div>
+    </div>
+
+
+    <div>
+        List输出:
+        <div>
+            <table>
+                <tr>
+                    <td>序号</td>
+                    <td>名字</td>
+                    <td>住址</td>
+                </tr>
+                <tr th:each="user,userStat:${users}">
+                    <td th:text="${userStat.count}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.address}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        Map输出:
+        <div>
+            <div th:each="map,mapStat:${dataMap}">
+                <span th:text="${map}"></span>
+                key:<span th:text="${mapStat.current.key}"></span>
+                value:<span th:text="${mapStat.current.value}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        纯文本输出:
+            <div th:each="ct:${city}">
+                <span th:text="${ct}"></span>
+            </div>
+    </div>
+
+
+
+    <div>
+        纯文本输出:<span th:text="${username}"></span>
+    </div>
+
+    <div>
+        对象输出:<span th:text="${user.name}"></span><span th:text="${user.address}"></span>
+    </div>
+
+    <div>
+        session文本输出:<span th:text="${session.sessionname}"></span>
+    </div>
+
+    <div>
+        request文本输出:<span th:text="${requestname}"></span>
+    </div>
+
+    <div>
+        Date类型输出:<span th:text="${#dates.format(now,'yyyy-MM-dd')}"></span>
+    </div>
+
+</pre>
+
+</body>
+</html>

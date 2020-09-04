@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--
+        JdbcTemplate
+    -->
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--加载解析配置文件-->
+    <!--<context:property-placeholder location="classpath:jdbc.properties" />-->
+
+
+    <!--加载解析配置文件-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!--指定加载的文件-->
+        <property name="location" value="classpath:jdbc.properties" />
+    </bean>
+
+    <!--
+        创建一个DataSource
+    -->
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+        <!--
+            配置数据源相关信息
+            url、driver、username、password
+        -->
+        <property name="jdbcUrl" value="${jdbcUrl}" />
+        <property name="driverClass" value="${driverClass}" />
+        <property name="user" value="${user}" />
+        <property name="password" value="${password}" />
+    </bean>
+
+</beans>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        创建Dao实例
+    -->
+    <bean class="com.itheima.dao.impl.AccountDaoImpl" id="accountDao" />
+
+    <!--
+        setter注入
+        给集合注入值
+    -->
+    <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService">
+        <!--
+            注入Dao
+        -->
+        <property name="accountDao" ref="accountDao" />
+
+        <!--给数组注入值-->
+        <property name="myStrs">
+            <array>
+                <value>小红</value>
+                <value>小花</value>
+                <value>小花花</value>
+                <value>花蝴蝶</value>
+            </array>
+        </property>
+
+        <!--
+            给List集合注入值
+        -->
+        <property name="myList">
+            <list>
+                <value>小猫</value>
+                <value>小狗</value>
+                <value>小鸭</value>
+                <value>小鸡</value>
+            </list>
+        </property>
+
+        <!--
+            给Set注入值
+        -->
+        <property name="mySet">
+            <set>
+                <value>王五</value>
+                <value>王六</value>
+                <value>王七</value>
+            </set>
+        </property>
+
+
+        <!--
+            给Map注入值
+        -->
+        <property name="myMap">
+            <map>
+                <entry key="username" value="李四" />
+                <entry key="userage" value="29" />
+                <entry key="useraddress" value="中粮" />
+            </map>
+        </property>
+
+        <!--
+            给Properties注入值
+        -->
+        <property name="myProps">
+            <props>
+                <prop key="number">No001</prop>
+                <prop key="telephone">13670081333</prop>
+            </props>
+        </property>
+
+    </bean>
+
+
+</beans>

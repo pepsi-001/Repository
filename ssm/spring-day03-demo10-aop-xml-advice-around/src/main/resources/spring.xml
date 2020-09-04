@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/aop
+                  http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+    <!--
+        创建AccountServiceImpl的Bean
+    -->
+    <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService" />
+
+    <!--
+        创建Logger的Bean
+        通知类
+    -->
+    <bean class="com.itheima.aop.Logger" id="logger" />
+
+    <!--
+        配置aop
+            aop:config
+        配置切面
+            aop:aspect
+        配置切点
+
+        配置通知
+
+    -->
+    <aop:config>
+        <!--
+            切面
+            ref="logger":当前切面使用的通知类为logger，也就是说增强代码在logger,每次指定的增强方法在logger里面
+        -->
+        <aop:aspect ref="logger">
+            <!--
+                切点配置
+                expression:切入点表达式,指定在哪些或者哪个方法上增强
+                id:配置一个唯一标示
+                * com.itheima.service.impl.*.*(..))
+                任意返回值 com.itheima.service.impl包下的所有类以及所有方法包含所有方法的参数都执行增强
+            -->
+            <aop:pointcut id="savePointCut" expression="execution(* com.itheima.service.impl.*.*(..))" />
+
+            <!--
+                环绕通知
+                    贯穿整个方法
+                        方法执行前，能监控
+                        方法执行后，能监控
+                        方法发生异常后，能监控
+            -->
+            <aop:around method="around" pointcut-ref="savePointCut" />
+        </aop:aspect>
+    </aop:config>
+
+
+
+</beans>

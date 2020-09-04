@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itheima.mapper.UserMapper">
+
+    <!--
+        SQL片段
+    -->
+    <sql id="SelectTable">
+        SELECT id,username,sex,address FROM  user
+    </sql>
+
+
+    <!--updateUserSet-->
+    <update id="updateUserSet" parameterType="User">
+        UPDATE user
+        <!--
+            在SQL语句前面追加一个set
+            会将最后一个逗号去掉
+        -->
+        <set>
+            <if test="username!=null and username!=''">
+              username=#{username},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="address!=null and address!=''">
+                address=#{address},
+            </if>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+        </set>
+        WHERE
+          id=#{id}
+    </update>
+
+
+    <!--
+        getByForeach
+        collection:指定要输出的集合
+                如果入参是List集合，则输入list
+                如果入参是数组，则输入array
+                如果入参是数组，则输入key   Map<key,List>
+        item:当前被遍历的对象
+        separator:分隔符
+
+        批量增加  List<User>
+        批量修改  List<User>   逐条修改
+    -->
+    <select id="getByForeach" parameterType="int" resultType="User">
+        <!--SELECT id,username,sex,address FROM  user-->
+
+        <!--
+        -    使用SQL片段
+            include:包含某一个SQL片段
+        -->
+        <include refid="SelectTable" />
+        <foreach
+                collection="list"
+                item="item"
+                separator=","
+                open=" WHERE  id IN ("
+                close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--
+     getUserIf
+    -->
+    <select id="getUserChoose" parameterType="User" resultType="User">
+        <include refid="SelectTable" /> WHERE 1=1
+        <!--
+            如果用户ID不为空，则只根据用户ID查询
+            如果用户ID为空，则根据其他条件查询
+        -->
+        <choose>
+            <when test="id!=null">
+                AND id=#{id}
+            </when>
+            <otherwise>
+                <!--动态SQL if-->
+                <if test="username!=null and username!=''">
+                    AND username=#{username}
+                </if>
+                <if test="sex!=null and sex!=''">
+                    AND sex=#{sex}
+                </if>
+                <if test="address!=null and address!=''">
+                    AND  address=#{address}
+                </if>
+            </otherwise>
+        </choose>
+    </select>
+
+
+   <!--
+    getUserIf
+   -->
+    <select id="getUserIf" parameterType="User" resultType="User">
+        <include refid="SelectTable" /> WHERE 1=1
+        <!--动态SQL if-->
+        <if test="username!=null and username!=''">
+            AND username=#{username}
+        </if>
+        <if test="sex!=null and sex!=''">
+            AND sex=#{sex}
+        </if>
+        <if test="address!=null and address!=''">
+            AND  address=#{address}
+        </if>
+    </select>
+
+
+
+    <!--
+     getUserWhere
+    -->
+    <select id="getUserWhere" parameterType="User" resultType="User">
+        <include refid="SelectTable" />
+        <where>
+            <!--动态SQL if-->
+            <if test="username!=null and username!=''">
+                AND username=#{username}
+            </if>
+            <if test="sex!=null and sex!=''">
+                AND sex=#{sex}
+            </if>
+            <if test="address!=null and address!=''">
+                OR  address=#{address}
+            </if>
+        </where>
+    </select>
+</mapper>

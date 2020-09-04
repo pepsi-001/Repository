@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="UserNamespace">
+
+    <!--
+        根据ID查询用户信息
+    -->
+    <select id="getByUserId" parameterType="int" resultType="com.itheima.domain.User">
+        SELECT * FROM  user WHERE id=#{id}
+    </select>
+
+
+    <!--
+        根据名字模糊查询
+    -->
+    <select id="getByUserName" parameterType="string" resultType="com.itheima.domain.User">
+        SELECT * FROM  user WHERE  username LIKE '%${value}%'
+    </select>
+
+
+    <!--
+        增加操作
+    -->
+    <insert id="addUser" parameterType="com.itheima.domain.User">
+        INSERT INTO user(username,sex,birthday,address) VALUES(#{username},#{sex},#{birthday},#{address})
+
+        <!--
+            获取主键返回值
+            keyColumn:要查询自增的主键列 id
+            keyProperty:查询出的主键列自增值赋值给入参的某(id)属性
+            resultType:查询的列的值转成的类型
+            order:AFTER:selectKey外部的SQL语句先执行，再执行selectKey内部的SQL语句
+        -->
+        <selectKey keyColumn="id" keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+</mapper>

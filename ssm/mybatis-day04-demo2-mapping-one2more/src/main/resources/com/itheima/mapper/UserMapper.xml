@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itheima.mapper.UserMapper">
+
+
+    <!--
+        resultMap
+    -->
+    <resultMap id="resultMapUser" type="User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="sex" property="sex" />
+        <result column="birthday" property="birthday" />
+        <result column="address" property="address" />
+
+        <!--
+            一对多
+            collection
+        -->
+        <collection property="accounts"
+                    column="id"
+                    select="com.itheima.mapper.AccountMapper.getAccountByUserId" />
+    </resultMap>
+
+
+    <!--根据用户名字查询用户信息-->
+    <select id="getByUserName" parameterType="string" resultMap="resultMapUser">
+        SELECT * FROM user WHERE username=#{username}
+    </select>
+
+
+</mapper>

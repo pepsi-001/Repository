@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--
+        resource:加载外部资源文件
+        优先加载自身属性
+    -->
+    <properties resource="jdbc.properties">
+    <!--<properties url="file:///D:/jdbc.properties">-->
+        <!--
+            定义自身属性
+            数据库用户名
+        -->
+        <property name="jdbc.username" value="root1" />
+    </properties>
+    <!--
+        Map<key,value> dataMap = xx;
+        dataMap.put("jdbc.driver,"com.mysql.jdbc.Driver");
+        dataMap.put("jdbc.url","jdbc:mysql://c33215d134.wicp.vip:47380/ssm");
+        dataMap.put("jdbc.username","root");
+        dataMap.put("jdbc.password","root");
+    -->
+
+
+    <!--别名配置-->
+    <typeAliases>
+        <!--
+            给单个对象配置别名
+            <typeAlias type="com.itheima.domain.User" alias="User" />
+        -->
+
+        <!--
+            包扫描配置
+        -->
+        <package name="com.itheima.domain" />
+    </typeAliases>
+
+
+    <!--数据源配置-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--数据源链接信息-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--加载映射文件-->
+    <mappers>
+        <!--
+            指定UserMapper.xml文件的路径
+            <mapper resource="com/itheima/mapper/UserMapper.xml"/>
+        -->
+
+        <!--接口方式配置映射-->
+        <!--<mapper class="com.itheima.mapper.UserMapper"/>-->
+
+        <!--
+            包扫描
+        -->
+        <package name="com.itheima.mapper" />
+
+    </mappers>
+
+</configuration>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        AccountService
+    -->
+    <bean class="com.itheima.service.impl.AccountServiceImpl" id="accountService">
+        <!--dao-->
+        <property name="accountDao" ref="accountDao" />
+    </bean>
+
+    <!--
+        给Dao注入JdbcTemplate
+    -->
+    <bean class="com.itheima.dao.impl.AccountDaoImpl" id="accountDao">
+       <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--
+        加载配置文件，并注入到对应Bean中
+    -->
+    <context:property-override location="classpath:jdbc.properties" />
+
+
+
+
+
+
+   <!--===========================基于AOP实现事务管理(声明式事务管理)================================-->
+
+    <!--
+        创建一个DataSource
+    -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" />
+
+    <!--创建事务管理器-->
+    <bean id="txtManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--
+        开启注解事务
+    -->
+    <tx:annotation-driven transaction-manager="txtManager" />
+
+
+</beans>

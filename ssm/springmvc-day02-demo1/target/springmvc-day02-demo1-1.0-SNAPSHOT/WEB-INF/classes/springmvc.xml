@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--包扫描-->
+    <context:component-scan base-package="com" />
+
+    <!--
+        配置spring开启注解mvc的支持
+        此处需要指定使用的自定义类型转换器对象
+    -->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+
+    <!--配置spring开启注解mvc的支持-->
+    <!--<mvc:annotation-driven></mvc:annotation-driven>-->
+
+
+    <!--
+        配置类型转换器
+    -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <!--
+            指定需要加入的类型转换器
+        -->
+        <property name="converters">
+            <set>
+                <!--自定义的类型转换器-->
+                <bean class="com.itheima.util.DateConverter" />
+            </set>
+        </property>
+    </bean>
+
+
+    <!-- 配置视图解析器 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--
+            前缀
+        -->
+        <property name="prefix" value="/WEB-INF/pages/"></property>
+
+        <!--
+            后缀
+        -->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+
+
+    <!--
+        静态资源都不拦截不处理
+        <mvc:default-servlet-handler />
+    -->
+
+    <!--
+       mapping:请求url的映射       mapping="/xiaohong/**"    http://localhost:8080/xiaohong/5.jpg
+       location:本地文件的位置     location="/images/"        http://localhost:8080/images/5.jpg
+    -->
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
+
+
+    <!--
+        文件上传解析器
+        id:值必须为 multipartResolver
+
+    -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--
+            设置编码
+        -->
+        <property name="defaultEncoding" value="UTF-8" />
+
+        <!--
+            允许上传的文件最大值
+            大小单位：byte
+        -->
+        <property name="maxUploadSize" value="10000000" />
+    </bean>
+
+
+    <!--
+        全局异常处理器
+    -->
+    <bean class="com.itheima.exception.ExceptionHandler" />
+
+
+    <!--
+        拦截器拦截器栈
+    -->
+    <mvc:interceptors>
+        <!--
+            配置单个拦截器
+        -->
+        <mvc:interceptor>
+            <!--
+                指定拦截的路径
+                path="/user/response/body/json":表示当前拦截器拦截的路径
+            -->
+            <mvc:mapping path="/user/response/body/json"/>
+            <!--
+                指定被拦截的路径交给指定拦截器处理
+            -->
+            <bean class="com.itheima.interceptor.LoginInterceptor" />
+        </mvc:interceptor>
+
+
+        <!--配置第2个拦截器-->
+        <mvc:interceptor>
+            <!--
+                path="/user/**"：指定拦截的路径,2颗*表示当前路径所有下级[无限级都行]
+                                                                /user/add或者/user/list或者/user/x
+                                                                /user/add/sdfds或者/user/dsfsd/list或者/sdfsf/dfsf/dsfdsf/dsfdsuser/x
+
+                path="/user/*":一颗*表示当前路径下一级    /user/add或者/user/list或者/user/x
+            -->
+            <mvc:mapping path="/user/*"/>
+            <!--
+                做日志的拦截器
+            -->
+            <bean class="com.itheima.interceptor.LogInterceptor" />
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+
+</beans>

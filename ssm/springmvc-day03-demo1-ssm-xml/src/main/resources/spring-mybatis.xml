@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置的连接池对象 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ssm"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+
+    <!--
+        配置一个SqlSessionFactoryBean的扩展对象
+        映射文件
+        别名
+        指定MyBatis核心配置文件
+        sqlSessionFactoryBean ！= SqlSessionFactory
+        ↑-需要指定数据源
+    -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--指定数据源,set方法-->
+        <property name="dataSource" ref="dataSource" />
+        <!--指定MyBatis核心配置文件,set方法-->
+        <property name="configLocation" value="classpath:sqlMapConfig.xml" />
+        <!--配置Model的别名,set方法-->
+        <property name="typeAliasesPackage" value="com.itheima.domain" />
+        <!--指定映射文件,set方法-->
+        <property name="mapperLocations">
+            <!--数组配置-->
+            <array>
+                <!--指定映射文件的位置,可以使用通配符-->
+                <value>classpath:com/itheima/mapper/*Mapper.xml</value>
+            </array>
+        </property>
+    </bean>
+
+
+    <!--
+        配置MyBatis接口扫描 MapperScannerConfigurer
+        指定Dao层接口所在的位置
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--配置Dao层接口所在的位置-->
+        <property name="basePackage" value="com.itheima.mapper" />
+        <!--
+            指定SqlSessionFactoryBean的名字
+            在分布式事务中，需要指定，因为分布式事务属于多个数据源
+            此处可以不用配置
+        -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+    </bean>
+
+
+</beans>

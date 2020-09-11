@@ -14,8 +14,8 @@
         -->
         <setting name="aggressiveLazyLoading" value="false" />
 
-        <!--开启缓存-->
-        <setting name="cacheEnabled" value="true" />
+        <!--开启缓存  可以省略 默认开启-->
+        <!--<setting name="cacheEnabled" value="true" />-->
     </settings>
 
     <!--别名配置-->

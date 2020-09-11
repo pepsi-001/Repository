@@ -10,7 +10,8 @@
         type="com.xxx.xx.xxx" :使用第三方的二级缓存,该类必须实现一个接口Cache
 
     -->
-    <cache flushInterval="3000" />
+    <!--<cache flushInterval="30000" />-->
+    <cache/>
 
     <!--
         resultMap
@@ -32,8 +33,10 @@
     </resultMap>
 
 
-    <!--根据用户名字查询用户信息-->
-    <select id="getByUserName" parameterType="string" resultMap="resultMapUser">
+    <!--根据用户名字查询用户信息
+        useCache="true" 默认为true
+    -->
+    <select id="getByUserName" parameterType="string" resultMap="resultMapUser" useCache="true">
         SELECT * FROM user WHERE username=#{username}
     </select>
 

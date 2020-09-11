@@ -86,7 +86,7 @@ public class JdbcTemplateTest {
         dataSource.setPassword("root");
         dataSource.setUser("root");
         dataSource.setDriverClass("com.mysql.jdbc.Driver");
-        dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/spring5");
+        dataSource.setJdbcUrl("jdbc:mysql://c33215d134.wicp.vip:47380/ssm?characterEncoding=utf-8");
         return dataSource;
     }
 

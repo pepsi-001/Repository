@@ -44,7 +44,7 @@
         -->
         <property name="user" value="root" />
         <property name="password" value="root" />
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/spring5" />
+        <property name="jdbcUrl" value="jdbc:mysql://c33215d134.wicp.vip:47380/ssm?characterEncoding=utf-8" />
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
     </bean>
 

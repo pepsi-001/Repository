@@ -10,19 +10,18 @@ import java.sql.*;
  *
  ****/
 public class Demo {
-
     public static void main(String[] args) throws Exception {
         /***
          * 1)耦合问题    Class.forName("com.mysql.....");
          * 2)硬编码问题  class--->Demo.java--->com.oracle.odbc.Driver--->javac--->发布
          */
         //1、注册驱动
-        //DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        //Class.forName("com.mysql.jdbc.Driver");
-        Class.forName("driver");//key = driver
+        //DriverManagerz.registerDriver(new com.mysql.jdbc.Driver());
+        Class.forName("com.mysql.jdbc.Driver");
+        //Class.forName("driver");//key = driver
 
         //2、获取连接Connection
-        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/spring5", "root", "root");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://c33215d134.wicp.vip:47380/ssm?characterEncoding=utf-8", "root", "root");
         //3、获取操作数据库的预处理对象PreparedStatment
         PreparedStatement pstm = conn.prepareStatement("SELECT * FROM account");
         //4、执行SQL语句，获得结果集

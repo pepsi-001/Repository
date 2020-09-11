@@ -2,7 +2,6 @@ package com.itheima.test;
 
 import com.itheima.dao.AccountDao;
 import com.itheima.service.AccountService;
-import com.itheima.service.impl.AccountServiceImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
@@ -37,7 +36,10 @@ public class ServletTest {
     public void testSpringIoc(){
         //创建加载Spring的IOC容器  Map-->beans
         ApplicationContext act = new ClassPathXmlApplicationContext("beans.xml");
-
+        String[] beanDefinitionNames = act.getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            System.out.println(beanDefinitionName);
+        }
         //从容器中获取对象的实例
         AccountService accountService = (AccountService) act.getBean("accountService");
         accountService.save("小黑");
@@ -53,8 +55,8 @@ public class ServletTest {
      */
     @Test
     public void testFileSystemXmlApplicationContext(){
-        //创建加载Spring的IOC容器  Map-->beans
-        ApplicationContext act = new FileSystemXmlApplicationContext("D:/beans.xml");
+        //创建加载Spring的IOC容器  Map-->beans     文件位置: D:/beans.xml
+        ApplicationContext act = new FileSystemXmlApplicationContext("D:/01_soft/03_IdeaProjects/git_repository/ssm/spring-day01-demo3-spring-case/src/main/resources//beans.xml");
 
         //从容器中获取对象的实例
         AccountService accountService = (AccountService) act.getBean("accountService");

@@ -7,7 +7,6 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class AccountDaoImpl implements AccountDao {
     * DBUtils操作数据库的对象
     * */
     @Autowired
-    //@Qualifier(value = "runner")
+    @Qualifier(value = "createRunner")
     private QueryRunner runner;
 
     /****

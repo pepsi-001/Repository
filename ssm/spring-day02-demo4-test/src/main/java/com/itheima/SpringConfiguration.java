@@ -1,13 +1,10 @@
 package com.itheima;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 
 /***
  *
@@ -33,7 +30,7 @@ public class SpringConfiguration {
      * 创建一个QueryRunner对象
      * @return
      */
-    @Bean(name = "runner")
+    @Bean//(name = "runner")
     //@Scope(value = "prototype")
     public QueryRunner createRunner(@Qualifier(value = "dataSource") DataSource dataSource){
         //创建一个QueryRunner对象，并赋值

@@ -1,6 +1,5 @@
 package com.itheima.factory;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +38,6 @@ public class BeanFactory {
 
             //将配置文件信息加载到Properties中
             properties.load(is);
-
 
             for (Object key : properties.keySet()) {
                 System.out.println(key);

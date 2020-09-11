@@ -1,8 +1,6 @@
 package com.itheima.test;
 
-import com.itheima.domain.Account;
 import com.itheima.domain.User;
-import com.itheima.mapper.AccountMapper;
 import com.itheima.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -13,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
-import java.util.List;
 
 /***
  *
@@ -124,7 +121,7 @@ public class MyBatisTest {
         UserMapper mapper2 = sqlSession2.getMapper(UserMapper.class);
         User user3 = mapper2.getByUserName("王哈哈");
 
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
 
         SqlSession sqlSession3 = sqlSessionFactory.openSession();
         UserMapper mapper3 = sqlSession3.getMapper(UserMapper.class);

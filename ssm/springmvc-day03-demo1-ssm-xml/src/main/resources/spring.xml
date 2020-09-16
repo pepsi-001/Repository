@@ -14,7 +14,7 @@
         <!--
             排斥@Controller注解
         -->
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />-->
     </context:component-scan>
 
     <!--

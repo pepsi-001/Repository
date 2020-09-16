@@ -20,6 +20,7 @@
 
     <!-- 使用thymeleaf解析 -->
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="characterEncoding" value="utf-8"/>  <!--解决响应的html页面乱码-->
         <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML" />

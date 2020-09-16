@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
      * @param money         交易金额
      */
     @Override
-    public void transfer(String sourceName, String targetName, Float money) {
+    public void transfer(String sourceName, String targetName, Float money) throws InterruptedException {
         //根据名字查询转出账户信息
         Account sourceAccount = accountDao.getByName(sourceName);
 

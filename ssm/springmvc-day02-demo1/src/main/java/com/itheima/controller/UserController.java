@@ -49,7 +49,7 @@ public class UserController {
     @RequestMapping(value = "/response/body/str")
     @ResponseBody
     public String strResponse(){
-        return "xiaohonghonghong";
+        return "add_user";
     }
 
     //视图渲染
@@ -203,14 +203,28 @@ public class UserController {
      * 返回void
      * 会跳转到某一个页面：
      */
-    @RequestMapping(value = "add")
-    public void addUser() {
+    @RequestMapping(value = "/add")    //默认会找 /user/add.jsp
+    public void addUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
         System.out.println("hello");
 
         //            uri  =  /user/add
         // /WEB-INF/pages/user/add.jsp
         //          请求的uri当做逻辑视图名
         //prefix +       逻辑视图名字       +suffix
+
+        //对于方法无返回值  转发/重定向/页面输出
+        System.out.println("请求转发或者重定向");
+        // 请求转发
+        // request.getRequestDispatcher("/WEB-INF/pages/add.jsp").forward(request, response);
+        // 重定向
+        // response.sendRedirect(request.getContextPath()+"/add2.jsp");
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
+        // 直接响应数据
+        response.getWriter().print("你好");
+        return;
     }
 
     /****

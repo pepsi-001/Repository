@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,8 +110,9 @@ public class DispacherServlet extends HttpServlet{
 
     /***
      * 初始化方法
+     * 相对demo1缺失了扫描@control注解
      * @param config
-     * @throws ServletException
+     * @throws ServletExcen
      */
     @Override
     public void init(ServletConfig config) throws ServletException {

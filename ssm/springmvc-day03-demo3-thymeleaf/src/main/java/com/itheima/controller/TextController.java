@@ -1,7 +1,6 @@
 package com.itheima.controller;
 
 import com.itheima.domain.User;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +22,7 @@ public class TextController {
 
     /***
      * 保存操作
+     * http://localhost:8080/text/save?name=小红&address=深圳
      * @param user
      * @return
      */

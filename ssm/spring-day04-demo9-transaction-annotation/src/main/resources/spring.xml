@@ -53,7 +53,7 @@
     </bean>
 
     <!--
-        开启注解事务
+        开启注解事务   @Transactional
     -->
     <tx:annotation-driven transaction-manager="txtManager" />
 

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ServiceHandler extends HttpServlet {
@@ -18,7 +17,9 @@ public class ServiceHandler extends HttpServlet {
          * 1、获取请求路径
          * 2、请求参数
          */
+        System.out.println("请求来了");
         String uri = request.getRequestURI();
+        StringBuffer requestURL = request.getRequestURL();
         uri = uri.substring(0,uri.lastIndexOf(".shtml"));
 
         //获取当前请求的路径地址

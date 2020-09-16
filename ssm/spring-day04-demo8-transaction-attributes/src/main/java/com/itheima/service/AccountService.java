@@ -24,6 +24,6 @@ public interface AccountService {
      * @param targetName    转入账户
      * @param money         交易金额
      */
-    void transfer(String sourceName,String targetName,Float money);
+    void transfer(String sourceName,String targetName,Float money) throws InterruptedException;
 
 }

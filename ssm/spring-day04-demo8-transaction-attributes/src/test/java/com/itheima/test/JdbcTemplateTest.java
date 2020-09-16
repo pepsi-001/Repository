@@ -1,20 +1,12 @@
 package com.itheima.test;
 
-import com.itheima.dao.AccountDao;
 import com.itheima.domain.Account;
 import com.itheima.service.AccountService;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.beans.PropertyVetoException;
-import java.util.List;
-import java.util.Map;
 
 /***
  *
@@ -34,7 +26,7 @@ public class JdbcTemplateTest {
      * 转账
      */
     @Test
-    public void testTransfer(){
+    public void testTransfer() throws InterruptedException {
         accountService.transfer("小红","小白",100f);
     }
 

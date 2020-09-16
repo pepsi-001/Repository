@@ -24,7 +24,7 @@
 <div>
 
     <div>
-        @RequestBody接收前台传递的参数
+        demo8 @RequestBody接收前台传递的参数
         <form action="/parameters/request/body" method="post">
             用户名：<input name="name" /><br/>
             年龄:<input name="age" /><br/>
@@ -34,7 +34,7 @@
     </div>
 
     <div>
-        处理Date问题(自定义类型转换器)
+        demo7 处理Date问题(自定义类型转换器)
         <form action="/parameters/date/add">
             用户名：<input name="name" /><br/>
             年龄:<input name="age" /><br/>
@@ -45,17 +45,10 @@
 
 
 
-    <div>
-        后台接受一个JavaBean
-        <form action="/parameters/bean/add">
-            用户名：<input name="name" /><br/>
-            年龄:<input name="age" /><br/>
-            <button type="submit">提交</button>
-        </form>
-    </div>
+
 
     <div>
-        后台接受一个一对多映射
+        demo6 后台接受一个一对多映射
         <form action="/parameters/one2more/add" method="post">
             用户名：<input name="name" /><br/>
             年龄:<input name="age" /><br/>
@@ -91,7 +84,7 @@
     </div>
 
     <div>
-        后台接受一个一对一映射
+        demo5 后台接受一个一对一映射
         <form action="/parameters/one2one/add">
             用户名：<input name="name" /><br/>
             年龄:<input name="age" /><br/>
@@ -104,18 +97,11 @@
         </form>
     </div>
 
-    <div>
-        接受一个Map
-        <form action="/parameters/map/add">
-            用户名：<input name="name" /><br/>
-            年龄:<input name="age" /><br/>
-            <button type="submit">提交</button>
-        </form>
-    </div>
+
 
 
     <div>
-        接受一个List
+        demo4 接受一个List
         <form action="/parameters/list/add">
            <table>
                <tr>
@@ -166,6 +152,35 @@
             <div>
                 <button type="submit">提交</button>
             </div>
+        </form>
+    </div>
+
+
+    <div>
+        demo3 接受一个Map
+        <form action="/parameters/map/add">
+            用户名：<input name="name" /><br/>
+            年龄:<input name="age" /><br/>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+
+    <div>
+        demo2 后台接受一个JavaBean
+        <form action="/parameters/bean/add">
+            用户名：<input name="name" /><br/>
+            年龄:<input name="age" /><br/>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+
+
+    <div>
+        demo1 基本数据类型和字符串类型
+        <form action="/parameters/add">
+            用户名：<input name="name" /><br/>
+            年龄:<input name="age" /><br/>
+            <button type="submit">提交</button>
         </form>
     </div>
 </div>

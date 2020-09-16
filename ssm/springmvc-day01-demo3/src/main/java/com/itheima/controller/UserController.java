@@ -20,12 +20,12 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/add")
-    public String addUser(){
+    public String addUser() {
         System.out.println("哈哈-add");
         //return "/WEB-INF/pages/add_user.jsp";
         ///WEB-INF/pages/
         //                          .jsp
-                return "add_user";  // user_add：逻辑视图
+        return "add_user";  // user_add：逻辑视图
     }
 
 }

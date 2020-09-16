@@ -7,6 +7,7 @@
 
 <div>
     ${sessionScope}
+    ${name} === ${age}
 </div>
 </body>
 </html>
